@@ -1,0 +1,779 @@
+/* --- Global Styles & Variables --- */
+:root {
+    --sky-blue: #133e4e;         /* Deep Sky Blue */
+    --mid-sky-blue: #3a6a7e;    /* Mid Sky Blue */
+    --light-sky-blue: #66a1a8;   /* Lighter Sky Blue */
+    --accent-teal: #429890;      /* Vibrant Teal Accent */
+    --off-white: #f0f4f8;       /* Light, neutral off-white/light blue-gray */
+    --pure-white: #ffffff;
+    --dark-text: #212529;        /* Softer dark text */
+    --medium-gray: #6c757d;      /* Secondary text */
+    --light-gray: #dee2e6;       /* Borders, subtle backgrounds */
+    --error-red: #d9534f;        /* For error messages */
+    --success-green: #5cb85c;   /* For success messages */
+    --border-radius: 8px;
+    --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    --box-shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.12);
+    --transition-speed: 0.3s;
+    --font-primary: 'Poppins', 'Arial', sans-serif;
+    --font-secondary: 'Roboto', 'Arial', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-secondary);
+    line-height: 1.7;
+    color: var(--dark-text);
+    background-color: var(--off-white);
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1140px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+/* --- Animation Helper Classes --- */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+.slide-in-left {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: opacity 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.slide-in-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+.slide-in-right {
+    opacity: 0;
+    transform: translateX(50px);
+    transition: opacity 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.slide-in-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* --- New Header Styles --- */
+header#mainHeader {
+    background-color: var(--sky-blue); /* Base color */
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+    /* overflow: hidden; /* REMOVED: This was causing the dropdown to be clipped */
+    height: 90px; /* Fixed header height */
+}
+
+/* Sinusoidal Slant Effect */
+header#mainHeader::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--accent-teal); /* Second color for the slant */
+    /* Adjusted clip-path for better horizontal responsiveness using percentages for X coordinates */
+    clip-path: path('M0,0 C20%,70 35%,10 50%,50 C65%,90 80%,30 100%,60 L100%,0 L0,0 Z');
+    /* Example of an extended fixed path if percentages are problematic:
+    clip-path: path('M0,0 C150,70 250,10 400,50 C550,90 650,30 800,60 C950,10 1100,70 1200,50 C1350,90 1500,30 1920,60 L1920,0 L0,0 Z');
+    */
+    z-index: 1; /* Behind header content */
+}
+
+header#mainHeader .header-container {
+    max-width: 1140px;
+    margin: auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    position: relative;
+    z-index: 2; /* Above the ::before pseudo-element */
+}
+
+/* Logo "ELEX" */
+.logo-elex {
+    background-color: #000000; /* Thick black */
+    color: var(--pure-white); /* White text */
+    font-family: var(--font-primary);
+    font-size: 2rem;
+    font-weight: 700;
+    padding: 10px 25px;
+    border-radius: 10px; /* Not sharp at endings */
+    display: inline-block;
+    line-height: 1.2;
+    text-transform: uppercase;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+.logo-elex:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+}
+
+/* Actions Section (Home Icon & Dropdown) */
+.actions-section {
+    position: relative; /* For dropdown positioning */
+}
+
+.icon-button {
+    background: none;
+    border: none;
+    color: var(--pure-white);
+    font-size: 1.8rem;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 50%;
+    transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+}
+.icon-button:hover,
+.icon-button:focus,
+.icon-button.active { /* Style when button is active/dropdown is open */
+    background-color: rgba(255, 255, 255, 0.15);
+    outline: none;
+}
+
+/* Home Icon Dropdown Menu */
+.dropdown-menu {
+    position: absolute;
+    top: calc(100% + 10px); /* Below the button */
+    right: 0;
+    background-color: var(--pure-white);
+    border-radius: var(--border-radius);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    z-index: 1001; /* Ensure it's above header content but can be below modal */
+    min-width: 200px;
+    padding: 8px 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px) scale(0.98); /* Added scale for subtle pop */
+    transition: opacity var(--transition-speed) ease, transform var(--transition-speed) ease, visibility 0s var(--transition-speed) linear;
+}
+.dropdown-menu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+    transition: opacity var(--transition-speed) ease, transform var(--transition-speed) ease, visibility 0s 0s linear;
+}
+
+.dropdown-item {
+    display: block;
+    padding: 10px 20px;
+    color: var(--dark-text);
+    text-decoration: none;
+    font-family: var(--font-secondary);
+    font-size: 0.95rem;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+.dropdown-item:hover {
+    background-color: var(--off-white);
+    color: var(--sky-blue);
+}
+
+/* --- Admin Login Modal Styles --- */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Backdrop */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-speed) ease, visibility 0s var(--transition-speed) linear;
+}
+.modal.active {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity var(--transition-speed) ease, visibility 0s 0s linear;
+}
+
+.modal-content {
+    background-color: var(--pure-white);
+    padding: 30px 40px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+    transform: scale(0.95) translateY(10px); /* Initial state for animation */
+    transition: transform var(--transition-speed) ease;
+}
+.modal.active .modal-content {
+    transform: scale(1) translateY(0);
+}
+
+.modal-content h2 {
+    font-family: var(--font-primary);
+    color: var(--sky-blue);
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 1.8rem;
+}
+
+.close-modal-button {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 1.8rem;
+    color: var(--medium-gray);
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s ease;
+}
+.close-modal-button:hover {
+    color: var(--dark-text);
+}
+
+#adminLoginForm .form-group {
+    margin-bottom: 20px;
+}
+#adminLoginForm label {
+    display: block;
+    font-family: var(--font-secondary);
+    font-size: 0.9rem;
+    color: var(--medium-gray);
+    margin-bottom: 5px;
+}
+#adminLoginForm input[type="email"],
+#adminLoginForm input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--light-gray);
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-family: var(--font-secondary);
+    transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+}
+#adminLoginForm input[type="email"]:focus,
+#adminLoginForm input[type="password"]:focus {
+    outline: none;
+    border-color: var(--sky-blue);
+    box-shadow: 0 0 0 3px rgba(19, 62, 78, 0.15);
+}
+#adminLoginForm .cta-button {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1rem;
+}
+/* General status message for forms (login, contact) */
+.status-message {
+    font-size: 0.9rem;
+    text-align: center;
+    margin-top: 15px;
+    padding: 8px;
+    border-radius: var(--border-radius);
+}
+.status-message.error {
+    color: var(--error-red);
+    background-color: #fddede;
+}
+.status-message.success {
+    color: var(--success-green);
+    background-color: #dff0d8;
+}
+
+
+/* --- Hero Section --- */
+#hero {
+    background-color: var(--pure-white);
+    padding: 80px 0 100px;
+    text-align: center;
+    overflow: hidden; /* For child animations */
+}
+#hero .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+}
+#hero .hero-content {
+    max-width: 750px;
+}
+#hero h2 {
+    font-family: var(--font-primary);
+    font-size: 3.5rem;
+    color: var(--dark-text);
+    margin-bottom: 25px;
+    line-height: 1.2;
+    font-weight: 700;
+}
+#hero p {
+    font-family: var(--font-secondary);
+    font-size: 1.25rem;
+    color: var(--medium-gray);
+    margin-bottom: 35px;
+}
+#hero .hero-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+/* --- CTA Button (General Purpose) --- */
+.cta-button {
+    font-family: var(--font-primary);
+    display: inline-block;
+    background-color: var(--sky-blue);
+    color: var(--pure-white);
+    padding: 16px 35px;
+    text-decoration: none;
+    border-radius: 50px; /* Pill shape */
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: background-color var(--transition-speed) ease, transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+    box-shadow: 0 4px 10px rgba(19, 62, 78, 0.3);
+    border: 2px solid transparent;
+    cursor: pointer;
+}
+.cta-button:hover, .cta-button:focus {
+    background-color: var(--mid-sky-blue);
+    color: var(--pure-white);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 6px 15px rgba(19, 62, 78, 0.4);
+    outline: none;
+}
+.cta-button:disabled {
+    background-color: var(--medium-gray);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+.cta-button.secondary { /* Optional secondary style */
+    background-color: transparent;
+    color: var(--sky-blue);
+    border: 2px solid var(--sky-blue);
+    box-shadow: none;
+}
+.cta-button.secondary:hover, .cta-button.secondary:focus {
+    background-color: var(--sky-blue);
+    color: var(--pure-white);
+    box-shadow: 0 4px 10px rgba(19, 62, 78, 0.3);
+}
+
+/* --- Content Sections General --- */
+.content-section {
+    padding: 80px 0;
+    text-align: center;
+}
+.content-section.alt-bg {
+    background-color: var(--pure-white);
+}
+.section-title {
+    font-family: var(--font-primary);
+    font-size: 2.8rem;
+    color: var(--dark-text);
+    margin-bottom: 15px;
+    position: relative;
+    display: inline-block;
+    font-weight: 700;
+}
+.section-title::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--sky-blue), var(--accent-teal));
+    border-radius: 2px;
+    margin: 15px auto 0;
+}
+.section-subtitle {
+    font-family: var(--font-secondary);
+    font-size: 1.15rem;
+    color: var(--medium-gray);
+    margin-bottom: 50px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* --- Services Section --- */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 35px;
+    text-align: left;
+}
+.service-card {
+    background-color: var(--pure-white);
+    padding: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, border-left-color var(--transition-speed) ease;
+    overflow: hidden;
+    border-left: 4px solid transparent;
+}
+.service-card:hover {
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: var(--box-shadow-hover);
+    border-left-color: var(--accent-teal);
+}
+.service-card .img-container {
+    overflow: hidden;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    margin: -30px -30px 20px -30px;
+}
+.service-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+}
+.service-card:hover img {
+    transform: scale(1.05);
+}
+.service-card h3 {
+    font-family: var(--font-primary);
+    color: var(--sky-blue);
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+.service-card p {
+    font-family: var(--font-secondary);
+    font-size: 0.98rem;
+    color: var(--medium-gray);
+    line-height: 1.6;
+}
+
+/* --- Clients Section --- */
+.clients-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    margin-top: 30px;
+}
+.client-category {
+    background-color: var(--pure-white);
+    color: var(--sky-blue);
+    padding: 12px 25px;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-family: var(--font-primary);
+    font-weight: 500;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.07);
+    border: 1px solid var(--light-gray);
+    transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease, transform var(--transition-speed) ease, border-color var(--transition-speed) ease;
+}
+.client-category:hover {
+    background-color: var(--sky-blue);
+    color: var(--pure-white);
+    border-color: var(--sky-blue);
+    transform: translateY(-2px);
+}
+
+/* --- Team Section --- */
+#team .team-intro {
+    max-width: 850px;
+    margin: 40px auto 0;
+    text-align: left;
+    background-color: var(--pure-white);
+    padding: 40px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+}
+#team .team-intro .team-image-container {
+    flex-shrink: 0;
+    max-width: 350px;
+    width: 100%;
+}
+#team .team-intro .team-image {
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    display: block;
+}
+#team .team-intro .team-text {
+    flex-grow: 1;
+}
+#team .team-intro p {
+    font-family: var(--font-secondary);
+    font-size: 1.05rem;
+    color: var(--medium-gray);
+    line-height: 1.8;
+}
+
+/* --- Contact Section --- */
+.contact-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-bottom: 50px;
+}
+.contact-option {
+    text-align: center;
+    padding: 30px 25px;
+    background-color: var(--pure-white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+    border-top: 4px solid var(--sky-blue);
+}
+#contact.alt-bg .contact-option {
+    background-color: var(--off-white);
+}
+.contact-option:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--box-shadow-hover);
+}
+.contact-option i {
+    font-size: 2.8rem;
+    color: var(--accent-teal);
+    margin-bottom: 20px;
+    transition: transform var(--transition-speed) ease;
+}
+.contact-option:hover i {
+    transform: scale(1.1);
+}
+.contact-option h3 {
+    font-family: var(--font-primary);
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    color: var(--sky-blue);
+    font-weight: 600;
+}
+.contact-option a, .contact-option p {
+    font-family: var(--font-secondary);
+    color: var(--medium-gray);
+    text-decoration: none;
+    font-size: 1rem;
+    word-break: break-all;
+}
+.contact-option a:hover {
+    color: var(--accent-teal);
+    text-decoration: underline;
+}
+
+.contact-form-intro {
+    font-family: var(--font-secondary);
+    margin-bottom: 25px;
+    font-size: 1.15rem;
+    color: var(--medium-gray);
+}
+.contact-form {
+    max-width: 700px;
+    margin: 0 auto;
+    display: grid;
+    gap: 20px;
+    text-align: left;
+    background-color: var(--pure-white);
+    padding: 30px 40px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+#contact.alt-bg .contact-form {
+    background-color: var(--off-white);
+}
+.contact-form div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.contact-form label {
+    font-family: var(--font-primary);
+    font-weight: 500;
+    color: var(--dark-text);
+    font-size: 0.9rem;
+}
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form textarea {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid var(--light-gray);
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-family: var(--font-secondary);
+    transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+    background-color: var(--off-white);
+}
+.contact-form input[type="text"]:focus,
+.contact-form input[type="email"]:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: var(--sky-blue);
+    box-shadow: 0 0 0 3px rgba(19, 62, 78, 0.2);
+}
+.contact-form textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+.contact-form button[type="submit"] {
+    width: 100%;
+    max-width: 250px;
+    margin: 10px auto 0;
+    display: block;
+    font-size: 1.1rem;
+    grid-column: 1 / -1;
+}
+/* --- Footer --- */
+footer {
+    background-color: var(--dark-text);
+    color: var(--light-gray);
+    text-align: center;
+    padding: 40px 0;
+    margin-top: 60px;
+}
+footer p {
+    font-family: var(--font-secondary);
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+footer a {
+    font-family: var(--font-primary);
+    color: var(--accent-teal);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color var(--transition-speed) ease;
+}
+footer a:hover {
+    color: var(--light-sky-blue);
+    text-decoration: underline;
+}
+
+/* --- Scroll to Top Button --- */
+#scrollToTopBtn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: var(--sky-blue);
+    color: var(--pure-white);
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: var(--box-shadow);
+    z-index: 999; /* Below header/modal but above most content */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: opacity var(--transition-speed) ease, visibility var(--transition-speed) ease, transform var(--transition-speed) ease, background-color var(--transition-speed) ease;
+}
+#scrollToTopBtn.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+#scrollToTopBtn:hover {
+    background-color: var(--mid-sky-blue);
+}
+#scrollToTopBtn i {
+    line-height: 50px; /* Vertically center icon */
+}
+
+
+/* --- Responsive Design --- */
+@media (min-width: 992px) {
+    #team .team-intro {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+    #team .team-intro .team-image-container {
+        margin-right: 30px;
+    }
+}
+
+@media (min-width: 769px) {
+    #hero .container {
+        flex-direction: row;
+        text-align: left;
+        align-items: center;
+    }
+    #hero .hero-content {
+        flex: 1.2;
+    }
+    #hero .hero-image {
+        flex: 1;
+        max-width: 45%;
+    }
+    .contact-form button[type="submit"] {
+        width: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    header#mainHeader {
+        height: 70px;
+    }
+    header#mainHeader::before { /* Adjust wave Y values for shorter header */
+      clip-path: path('M0,0 C20%,55 35%,8 50%,40 C65%,70 80%,25 100%,45 L100%,0 L0,0 Z');
+    }
+    .logo-elex {
+        font-size: 1.7rem;
+        padding: 8px 18px;
+    }
+    .icon-button {
+        font-size: 1.6rem;
+    }
+    #hero h2 {
+        font-size: 2.5rem;
+    }
+    #hero p {
+        font-size: 1.1rem;
+    }
+    .section-title {
+        font-size: 2.2rem;
+    }
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+    .contact-options {
+        grid-template-columns: 1fr;
+    }
+    .contact-form {
+        padding: 25px 20px;
+    }
+    .contact-form button[type="submit"] {
+        max-width: 100%;
+    }
+    #scrollToTopBtn {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
+        bottom: 20px;
+        right: 20px;
+    }
+    #scrollToTopBtn i {
+        line-height: 45px;
+    }
+}

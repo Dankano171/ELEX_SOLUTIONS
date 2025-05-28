@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELEX - Your Technical Partners</title>
+    <meta name="description" content="ELEX offers comprehensive technology solutions including automation, custom software, web & app development, and IT consultancy for businesses, enterprises, startups, schools, and institutions.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Your Stylesheet -->
+    <link rel="stylesheet" href="new.css">
+</head>
+<body>
+
+    <header id="mainHeader">
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo-elex">ELEX</div>
+            </div>
+            <div class="actions-section">
+                <button id="homeMenuButton" class="icon-button" aria-label="Open Menu" aria-expanded="false">
+                    <i class="fas fa-home"></i>
+                </button>
+                <div id="homeDropdownMenu" class="dropdown-menu">
+                    <a href="#contact" class="dropdown-item" id="contactUsLink">Contact Us</a>
+                    <button class="dropdown-item" id="adminLoginButton">Login as Admin</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Login Modal (Initially Hidden by CSS or JS via class) -->
+    <div id="adminLoginModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="adminLoginModalTitle">
+        <div class="modal-content">
+            <span class="close-modal-button" id="closeLoginModal" aria-label="Close login modal">×</span>
+            <h2 id="adminLoginModalTitle">Admin Login</h2>
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label for="adminEmail">Email:</label>
+                    <input type="email" id="adminEmail" name="adminEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="adminPassword">Password:</label>
+                    <input type="password" id="adminPassword" name="adminPassword" required>
+                </div>
+                <button type="submit" class="cta-button">Login</button>
+                <p id="loginStatusMessage" class="status-message" style="display: none;"></p> <!-- Combined error/success message -->
+            </form>
+        </div>
+    </div>
+
+    <main>
+        <section id="hero" class="fade-in">
+            <div class="container">
+                <div class="hero-content slide-in-left">
+                    <h2 data-translate="hero_title">Empowering Your Vision with Technology</h2>
+                    <p data-translate="hero_subtitle">At ELEX, we don't just provide technology; we forge strategic partnerships. We are dedicated to understanding the unique aspirations and challenges of your organization, regardless of its size or industry. Our team then meticulously designs and implements innovative, tailored technology solutions – from intelligent automation and custom software to dynamic web platforms and insightful IT consultancy. These solutions are purposefully engineered not merely to solve immediate problems, but to act as powerful catalysts that drive sustainable growth, unlock new levels of operational efficiency, and ultimately pave the way for your enduring success in an ever-evolving digital landscape. We are committed to being your trusted technical ally every step of the way.</p>
+                    <a href="#contact" class="cta-button" data-translate="hero_cta">Get a Free Consultation</a>
+                </div>
+                <div class="hero-image slide-in-centre">
+                    <img src="/home/buk/Desktop/LX-project/modern-technology.jpeg" alt="Modern Technology Abstract"> <!-- Relative path -->
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="content-section">
+            <div class="container">
+                <h2 class="section-title fade-in" data-translate="services_title">Our Core Services</h2>
+                <p class="section-subtitle fade-in" data-translate="services_subtitle">Tailored solutions to meet your unique business needs.</p>
+                <div class="services-grid">
+                    <div class="service-card fade-in">
+                        <div class="img-container">
+                            <img src="/home/buk/Desktop/LX-project/technology.webp" alt="Automation Solutions"> <!-- Relative path -->
+                        </div>
+                        <h3 data-translate="service_automation_title">Automation Solutions</h3>
+                        <p data-translate="service_automation_desc">Streamline your operations, reduce manual tasks, and boost productivity with our intelligent automation solutions. From RPA to workflow optimization.</p>
+                    </div>
+                    <div class="service-card fade-in">
+                        <div class="img-container">
+                            <img src="/home/buk/Desktop/LX-project/custom-software.jpeg" alt="Custom Software Development">
+                        </div>
+                        <h3 data-translate="service_customsoft_title">Custom Software Development</h3>
+                        <p data-translate="service_customsoft_desc">We build scalable, secure, and bespoke software applications perfectly aligned with your specific requirements and business goals.</p>
+                    </div>
+                    <div class="service-card fade-in">
+                        <div class="img-container">
+                            <img src="/home/buk/Desktop/LX-project/web-design.jpeg" alt="Web Design & Development">
+                        </div>
+                        <h3 data-translate="service_web_title">Web Design & Development</h3>
+                        <p data-translate="service_web_desc">Crafting visually stunning, user-friendly, and responsive websites that captivate your audience and drive conversions. SEO-optimized for visibility.</p>
+                    </div>
+                    <div class="service-card fade-in">
+                        <div class="img-container">
+                             <img src="/home/buk/Desktop/LX-project/app.jpeg" alt="App Development">
+                        </div>
+                        <h3 data-translate="service_app_title">Mobile App Development</h3>
+                        <p data-translate="service_app_desc">Engage your users on the go with intuitive and powerful native or cross-platform mobile applications for iOS and Android.</p>
+                    </div>
+                    <div class="service-card fade-in">
+                        <div class="img-container">
+                            <img src="/home/buk/Desktop/LX-project/it-conslt.jpeg" alt="IT Consultancy">
+                        </div>
+                        <h3 data-translate="service_itconsult_title">IT Consultancy</h3>
+                        <p data-translate="service_itconsult_desc">Leverage our expertise for strategic IT planning, digital transformation, cybersecurity, and technology roadmap development.</p>
+                    </div>
+                    <div class="service-card fade-in">
+                        <div class="img-container">
+                            <img src="/home/buk/Desktop/LX-project/cloud.jpeg" alt="Cloud & DevOps">
+                        </div>
+                        <h3 data-translate="service_cloud_title">Cloud Solutions & DevOps</h3>
+                        <p data-translate="service_cloud_desc">Optimize your infrastructure with cloud migration, management, and DevOps practices for enhanced scalability and reliability.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="clients" class="content-section alt-bg">
+            <div class="container">
+                <h2 class="section-title fade-in" data-translate="clients_title">Who We Serve</h2>
+                <p class="section-subtitle fade-in" data-translate="clients_subtitle">Partnering with diverse organizations to achieve their technological aspirations.</p>
+                <div class="clients-grid">
+                    <div class="client-category fade-in" data-translate="client_smb">Small & Medium Businesses</div>
+                    <div class="client-category fade-in" data-translate="client_enterprise">Enterprises</div>
+                    <div class="client-category fade-in" data-translate="client_startups">Startups</div>
+                    <div class="client-category fade-in" data-translate="client_education">Schools & Educational Institutions</div>
+                    <div class="client-category fade-in" data-translate="client_gov">Ministries & Government Agencies</div>
+                    <div class="client-category fade-in" data-translate="client_nonprofit">Non-Profits & NGOs</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="team" class="content-section">
+            <div class="container fade-in">
+                <h2 class="section-title" data-translate="team_title">Meet Our Experts</h2>
+                <p class="section-subtitle" data-translate="team_subtitle">A brief look at the minds behind ELEX.</p>
+                <div class="team-intro">
+                    <div class="team-image-container">
+                        <img src="/home/buk/Desktop/LX-project/Collaborating_team_hero.jpg" alt="ELEX Team Collaborating" class="team-image">
+                    </div>
+                    <div class="team-text">
+                        <p data-translate="team_desc">At ELEX, our strength lies in our diverse team of passionate technologists, creative designers, and strategic thinkers. We bring a wealth of experience from various industries, united by a common goal: to deliver exceptional technology solutions that empower our clients. We believe in continuous learning and a collaborative approach to turn your challenges into opportunities.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="content-section alt-bg">
+            <div class="container fade-in">
+                <h2 class="section-title" data-translate="contact_title">Let's Discuss Your Project</h2>
+                <p class="section-subtitle" data-translate="contact_subtitle">Reach out today for a no-obligation consultation.</p>
+                <div class="contact-options">
+                    <div class="contact-option">
+                        <i class="fas fa-envelope"></i>
+                        <h3 data-translate="contact_email_title">Email Us</h3>
+                        <a href="mailto:info@elexsolution.com">info@elexsolution.com</a>
+                    </div>
+                    <div class="contact-option">
+                        <i class="fab fa-whatsapp"></i>
+                        <h3 data-translate="contact_whatsapp_title">WhatsApp</h3>
+                        <a href="https://wa.me/2347037517631" target="_blank" data-translate="contact_whatsapp_action">Chat with Us</a>
+                        <p>(+234 703 751 7631)</p>
+                    </div>
+                    <div class="contact-option">
+                        <i class="fab fa-facebook-messenger"></i>
+                        <h3 data-translate="contact_messenger_title">Messenger</h3>
+                        <a href="https://m.me/yourfacebookpage" target="_blank" data-translate="contact_messenger_action">Message Us</a>
+                    </div>
+                </div>
+                <p class="contact-form-intro" data-translate="contact_form_intro">Or fill out the form below and we'll get back to you shortly:</p>
+                <form id="contactForm" class="contact-form">
+                    <div>
+                        <label for="formName" data-translate="form_name_label">Your Name</label>
+                        <input type="text" id="formName" name="name" placeholder="e.g., Jane Doe" required data-translate-placeholder="form_name_placeholder">
+                    </div>
+                    <div>
+                        <label for="formEmail" data-translate="form_email_label">Your Email</label>
+                        <input type="email" id="formEmail" name="email" placeholder="e.g., jane.doe@example.com" required data-translate-placeholder="form_email_placeholder">
+                    </div>
+                    <div>
+                        <label for="formSubject" data-translate="form_subject_label">Subject</label>
+                        <input type="text" id="formSubject" name="subject" placeholder="e.g., Project Inquiry" required data-translate-placeholder="form_subject_placeholder">
+                    </div>
+                    <div>
+                        <label for="formMessage" data-translate="form_message_label">Your Message</label>
+                        <textarea id="formMessage" name="message" rows="5" placeholder="Tell us about your project or query..." required data-translate-placeholder="form_message_placeholder"></textarea>
+                    </div>
+                    <button type="submit" class="cta-button" data-translate="form_submit_button">Send Message</button>
+                    <p id="contactFormStatus" class="status-message" style="display: none;"></p>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p data-translate="footer_copyright">© 2024 ELEX - Your Technical Partners. All Rights Reserved.</p>
+            <p><a href="#privacy" data-translate="footer_privacy">Privacy Policy</a> | <a href="#terms" data-translate="footer_terms">Terms of Service</a></p>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTopBtn" title="Go to top" aria-label="Scroll to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="new.js"></script> 
+</body>
+</html>
